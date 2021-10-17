@@ -9,8 +9,8 @@ const writeStream = fs.createWriteStream(jsonFilePath);
 
 const onError = error => console.log(`ERROR! ${error}`);
 
-readStream.pipe(csv())
-    .on('data', data => {
-        writeStream.write(data);
-    })
-    .on('error', onError);
+readStream.on('error', onError);
+writeStream.on('error', onError);
+
+readStream.pipe(csv()).pipe(writeStream);
+
