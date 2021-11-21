@@ -9,6 +9,7 @@
     "task1.3": "babel-node hw1/task3/task3.js",
     "task2": "babel-node hw2/task.js",
     "task3": "babel-node hw3/app.js",
+    "task4": "babel-node hw4/app.js",
     "lint": "eslint --ext js hw2",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
