@@ -4,7 +4,7 @@ const userRouter = express.Router({
     mergeParams: true
 });
 
-import { User as UserModel } from '../models/user.model';
+import { UserModel } from '../models/user.model';
 import { UserService } from '../services/user.service';
 import { paramsQuerySchema, searchQuerySchema } from '../configs/validators';
 import { commonError, notFoundError } from './error.handling';

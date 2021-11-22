@@ -2,9 +2,9 @@ import { DataTypes, Model } from 'sequelize';
 import { sequelize } from '../data-access/sequelize';
 import { PERMISSIONS } from '../configs/constants';
 
-class Group extends Model {}
+class GroupModel extends Model {}
 
-Group.init({
+GroupModel.init({
     id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
@@ -28,4 +28,4 @@ Group.init({
     modelName: 'group'
 });
 
-export { Group };
+export { GroupModel };

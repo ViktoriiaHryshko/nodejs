@@ -5,10 +5,13 @@ export const notFoundError = res => res
     .send(ReasonPhrases.NOT_FOUND);
 
 export const commonError = (res, error) => {
-    const { errors = [] }  = error;
-    const { message = 'Unknown error!' } = errors.length && errors[0];
+    if (!error.errors) error.errors = [{ message: '' }];
+    if (!error.original) error.original = { detail: '' };
+
+    const { errors: [{ message }], original: { detail = 'Unknown error!' } } = error;
+    const errorMessage = `ERROR! ${detail} ${message}`;
 
     return res
         .status(StatusCodes.NOT_FOUND)
-        .send(message);
+        .send(errorMessage);
 };

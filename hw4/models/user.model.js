@@ -1,9 +1,9 @@
 import { DataTypes, Model } from 'sequelize';
 import { sequelize } from '../data-access/sequelize';
 
-class User extends Model {}
+class UserModel extends Model {}
 
-User.init({
+UserModel.init({
     id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
@@ -42,4 +42,4 @@ User.init({
     modelName: 'users'
 });
 
-export { User };
+export { UserModel };

@@ -5,7 +5,8 @@ const groupRouter = express.Router({
     mergeParams: true
 });
 
-import { Group as GroupModel } from '../models/group.model';
+import { GroupModel } from '../models/group.model';
+import { UserGroupModel } from '../models/userGroup.model';
 import { GroupService } from '../services/group.service';
 import { paramsQuerySchema } from '../configs/validators';
 import { commonError, notFoundError } from './error.handling';
@@ -13,7 +14,7 @@ import { commonError, notFoundError } from './error.handling';
 const { StatusCodes, ReasonPhrases } = require('http-status-codes');
 const validator = createValidator({});
 
-const groupService = new GroupService(GroupModel);
+const groupService = new GroupService(GroupModel, UserGroupModel);
 
 groupRouter.get('/:id',  async (req, res) => {
     try {
