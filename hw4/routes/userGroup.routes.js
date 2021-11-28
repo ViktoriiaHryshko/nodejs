@@ -36,7 +36,8 @@ userGroupRouter.get('/', async (req, res) => {
 
 userGroupRouter.post('/', async (req, res) => {
     try {
-        await userGroupService.createUserGroup(req.body);
+        const { groupId, userId } = req.body;
+        await userGroupService.addUsersToGroup(groupId, userId);
         return res
             .status(StatusCodes.OK)
             .send(ReasonPhrases.CREATED);

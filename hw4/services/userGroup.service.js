@@ -1,8 +1,8 @@
+import { sequelize } from '../data-access/sequelize';
+
 export class UserGroupService {
-    constructor(userGroupModel, userModel, groupModel) {
+    constructor(userGroupModel) {
         this.userGroupModel = userGroupModel;
-        this.userModel = userModel;
-        this.groupModel = groupModel;
     }
 
     async getUserGroupById(userGroupId) {
@@ -13,10 +13,23 @@ export class UserGroupService {
         return await this.userGroupModel.findAll();
     }
 
-    async createUserGroup(userGroup) {
-        return await this.userGroupModel.create({
-            userId: userGroup.userId,
-            groupId: userGroup.groupId
-        });
+    async addUsersToGroup(groupId, userId) {
+        const t = await sequelize.transaction();
+
+        try {
+            const user = await this.userGroupModel.create({
+                userId,
+                groupId
+            }, {
+                transaction: t
+            });
+
+            await t.commit();
+
+            return user;
+        } catch (error) {
+            await t.rollback();
+            throw error;
+        }
     }
 }
