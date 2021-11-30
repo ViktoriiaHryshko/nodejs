@@ -1,5 +1,8 @@
-import { sequelize } from '../data-access/sequelize';
 import { DataTypes, Model } from 'sequelize';
+
+import { sequelize } from '../data-access/sequelize';
+import { GroupModel } from './group.model';
+import { UserModel } from './user.model';
 
 class UserGroupModel extends Model {}
 
@@ -18,10 +21,6 @@ UserGroupModel.init({
             notNull: {
                 msg: 'Please enter the user id'
             }
-        },
-        references: {
-            model: 'users',
-            key: 'id'
         }
     },
     groupId: {
@@ -31,17 +30,15 @@ UserGroupModel.init({
             notNull: {
                 msg: 'Please enter the user id'
             }
-        },
-        references: {
-            model: 'groups',
-            key: 'id'
-        },
-        onDelete: 'CASCADE'
+        }
     }
 }, {
     sequelize,
     timestamps: false,
     modelName: 'userGroup'
 });
+
+UserModel.belongsToMany(GroupModel, { through: UserGroupModel });
+GroupModel.belongsToMany(UserModel, { through: UserGroupModel });
 
 export { UserGroupModel };
