@@ -46,7 +46,8 @@
     "pg": "^8.7.1",
     "sequelize": "^6.9.0",
     "supports-color": "^9.2.1",
-    "uuid": "^8.3.2"
+    "uuid": "^8.3.2",
+    "winston": "^3.3.3"
   },
   "compilerOptions": {
     "esModuleInterop": true

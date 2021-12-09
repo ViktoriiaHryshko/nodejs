@@ -3,12 +3,12 @@ import { UserModel } from '../models/user.model';
 import { UserService } from '../services/user.service';
 import { paramsQuerySchema, searchQuerySchema } from '../configs/validators';
 import { commonError, notFoundError } from './error.handling';
+import { winston } from '../middlewares/winstonLogger';
 
 const express = require('express');
 const userRouter = express.Router({
     mergeParams: true
 });
-const debug = require('debug')('app:user.routes');
 
 const { StatusCodes, ReasonPhrases } = require('http-status-codes');
 const validator = createValidator({});
@@ -22,7 +22,7 @@ userRouter.get('/:id',  async (req, res) => {
             .status(StatusCodes.OK)
             .send(user) : notFoundError(res);
     } catch (error) {
-        debug(`Method: getUserById;\nArguments: ${req.params.id}`);
+        winston.error(`Method: getUserById; Arguments: ${req.params.id}`);
         return commonError(res, error);
     }
 });
@@ -35,7 +35,7 @@ userRouter.get('/', validator.query(searchQuerySchema), async (req, res) => {
             .status(StatusCodes.OK)
             .send(rows) : notFoundError(res);
     } catch (error) {
-        debug(`Method: getUsersByQuery;\nArguments: ${JSON.stringify(req.query)}`);
+        winston.error(`Method: getUsersByQuery; Arguments: ${JSON.stringify(req.query)}`);
         return commonError(res, error);
     }
 });
@@ -47,7 +47,7 @@ userRouter.post('/', async (req, res) => {
             .status(StatusCodes.OK)
             .send(ReasonPhrases.CREATED);
     } catch (error) {
-        debug(`Method: createUser;\nArguments: ${JSON.stringify(req.body)}`);
+        winston.error(`Method: createUser; Arguments: ${JSON.stringify(req.body)}`);
         return commonError(res, error);
     }
 });
@@ -59,7 +59,7 @@ userRouter.put('/:id', async (req, res) => {
             .status(StatusCodes.OK)
             .send(ReasonPhrases.OK);
     } catch (error) {
-        debug(`Method: updateUser;\nArguments: ${JSON.stringify(req.body)}, ${req.params.id}`);
+        winston.error(`Method: updateUser; Arguments: ${JSON.stringify(req.body)}, ${req.params.id}`);
         return commonError(res, error);
     }
 });
@@ -71,7 +71,7 @@ userRouter.delete('/:id', validator.params(paramsQuerySchema), async (req, res) 
             .status(StatusCodes.OK)
             .send(ReasonPhrases.OK);
     } catch (error) {
-        debug(`Method: deleteUser;\nArguments: ${req.params.id}`);
+        winston.error(`Method: deleteUser; Arguments: ${req.params.id}`);
         return commonError(res, error);
     }
 });
