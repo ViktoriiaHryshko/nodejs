@@ -1,4 +1,5 @@
 import express from 'express';
+import { logErrorMiddleware, returnError } from './middlewares/errorHandler';
 import { router } from './routes/app.routes';
 import { PORT } from './configs/constants';
 import { sequelize } from './data-access/sequelize';
@@ -12,6 +13,8 @@ winston.info('booting app');
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(ServerLogger);
+app.use(returnError);
+app.use(logErrorMiddleware);
 
 const startServer = appRouter => {
     app.use('/', appRouter);
