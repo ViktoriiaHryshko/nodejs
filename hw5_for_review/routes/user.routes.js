@@ -1,13 +1,14 @@
 import { createValidator } from 'express-joi-validation';
-const express = require('express');
-const userRouter = express.Router({
-    mergeParams: true
-});
-
 import { UserModel } from '../models/user.model';
 import { UserService } from '../services/user.service';
 import { paramsQuerySchema, searchQuerySchema } from '../configs/validators';
 import { commonError, notFoundError } from './error.handling';
+import { winston } from '../middlewares/winstonLogger';
+
+const express = require('express');
+const userRouter = express.Router({
+    mergeParams: true
+});
 
 const { StatusCodes, ReasonPhrases } = require('http-status-codes');
 const validator = createValidator({});
@@ -21,6 +22,7 @@ userRouter.get('/:id',  async (req, res) => {
             .status(StatusCodes.OK)
             .send(user) : notFoundError(res);
     } catch (error) {
+        winston.error(`Method: getUserById; Arguments: ${req.params.id}`);
         return commonError(res, error);
     }
 });
@@ -33,6 +35,7 @@ userRouter.get('/', validator.query(searchQuerySchema), async (req, res) => {
             .status(StatusCodes.OK)
             .send(rows) : notFoundError(res);
     } catch (error) {
+        winston.error(`Method: getUsersByQuery; Arguments: ${JSON.stringify(req.query)}`);
         return commonError(res, error);
     }
 });
@@ -44,6 +47,7 @@ userRouter.post('/', async (req, res) => {
             .status(StatusCodes.OK)
             .send(ReasonPhrases.CREATED);
     } catch (error) {
+        winston.error(`Method: createUser; Arguments: ${JSON.stringify(req.body)}`);
         return commonError(res, error);
     }
 });
@@ -55,6 +59,7 @@ userRouter.put('/:id', async (req, res) => {
             .status(StatusCodes.OK)
             .send(ReasonPhrases.OK);
     } catch (error) {
+        winston.error(`Method: updateUser; Arguments: ${JSON.stringify(req.body)}, ${req.params.id}`);
         return commonError(res, error);
     }
 });
@@ -66,6 +71,7 @@ userRouter.delete('/:id', validator.params(paramsQuerySchema), async (req, res) 
             .status(StatusCodes.OK)
             .send(ReasonPhrases.OK);
     } catch (error) {
+        winston.error(`Method: deleteUser; Arguments: ${req.params.id}`);
         return commonError(res, error);
     }
 });

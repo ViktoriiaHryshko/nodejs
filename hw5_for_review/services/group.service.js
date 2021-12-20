@@ -1,7 +1,6 @@
 export class GroupService {
-    constructor(groupModel, userGroupModel) {
+    constructor(groupModel) {
         this.groupModel = groupModel;
-        this.userGroupModel = userGroupModel;
     }
 
     async getGroupById(groupId) {
