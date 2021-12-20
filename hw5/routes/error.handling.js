@@ -1,9 +1,8 @@
 import { ReasonPhrases, StatusCodes } from 'http-status-codes';
-
-const debug = require('debug')('app:error.handling');
+import { winston } from '../middlewares/winstonLogger';
 
 export const notFoundError = res => {
-    debug('Error: NOT_FOUND;');
+    winston.warn('Empty response from the model: NOT_FOUND;');
 
     return res
         .status(StatusCodes.NOT_FOUND)
@@ -17,7 +16,7 @@ export const commonError = (res, error) => {
     const { errors: [{ message }], original: { detail = 'Unknown error!' } } = error;
     const errorMessage = `ERROR! ${detail} ${message}`;
 
-    debug(errorMessage);
+    winston.error(errorMessage);
 
     return res
         .status(StatusCodes.NOT_FOUND)

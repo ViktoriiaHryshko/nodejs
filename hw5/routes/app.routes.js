@@ -16,5 +16,4 @@ router.get('/', (req, res) => res
     .send('Homework 4')
 );
 
-
 export { router };
