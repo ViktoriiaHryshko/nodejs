@@ -10,6 +10,8 @@
     "task2": "babel-node hw2/task.js",
     "task3": "babel-node hw3/app.js",
     "task4": "babel-node hw4/app.js",
+    "task5": "DEBUG=app:* babel-node --inspect hw5/app.js",
+    "task6": "NODE_ENV=development DEBUG=app:* babel-node --inspect hw6/app.js",
     "lint": "eslint --ext js hw2",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -36,11 +38,16 @@
     "nodemon": "^2.0.13"
   },
   "dependencies": {
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
     "csvtojson": "^2.0.10",
+    "debug": "^4.3.3",
+    "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "express-joi-validation": "^5.0.0",
     "http-status-codes": "^2.1.4",
     "joi": "^17.4.2",
+    "jsonwebtoken": "^8.5.1",
     "pg": "^8.7.1",
     "sequelize": "^6.9.0",
     "supports-color": "^9.2.1",

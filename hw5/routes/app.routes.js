@@ -13,7 +13,7 @@ router.use('/user-group', userGroupRouter);
 
 router.get('/', (req, res) => res
     .status(StatusCodes.OK)
-    .send('Homework 4')
+    .send('Homework 5')
 );
 
 export { router };
