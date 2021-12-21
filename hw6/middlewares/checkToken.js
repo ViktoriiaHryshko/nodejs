@@ -12,7 +12,7 @@ const CheckToken = (req, res, next) => {
 
     return jwt.verify(token, process.env.JWT_SECRET, err => {
         if (err) {
-            res.json({
+            res.status(403).json({
                 success: false,
                 message: 'Failed to authenticate token!'
             });
