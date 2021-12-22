@@ -1,8 +1,9 @@
+import { StatusCodes } from 'http-status-codes';
+import jwt from 'jsonwebtoken';
+
 import { AuthService } from '../services/auth.service';
 import { commonError } from './error.handling';
 import { winston } from '../middlewares/winstonLogger';
-import { StatusCodes } from 'http-status-codes';
-import jwt from 'jsonwebtoken';
 import { UserModel } from '../models/user.model';
 
 const express = require('express');
@@ -26,9 +27,11 @@ authRouter.post('/',  async (req, res) => {
         const payload = { 'sub': user.id, 'isActive': !user.isDeleted };
         const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: 20 });
 
-        // localStorage.setItem('token', token);
-
         return res
+            .cookie('access_token', token, {
+                httpOnly: true,
+                secure: process.env.NODE_ENV === 'production'
+            })
             .status(StatusCodes.OK)
             .send({ token });
     } catch (error) {
