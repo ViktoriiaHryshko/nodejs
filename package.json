@@ -12,8 +12,9 @@
     "task4": "babel-node hw4/app.js",
     "task5": "DEBUG=app:* babel-node --inspect hw5/app.js",
     "task6": "NODE_ENV=development DEBUG=app:* babel-node --inspect hw6/app.js",
+    "task7": "NODE_ENV=development DEBUG=app:* babel-node --inspect hw7/app.js",
     "lint": "eslint --ext js hw2",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -35,6 +36,7 @@
     "babel-core": "^6.26.3",
     "babel-eslint": "^10.1.0",
     "eslint": "^8.1.0",
+    "jest": "^27.4.5",
     "nodemon": "^2.0.13"
   },
   "dependencies": {
