@@ -1,7 +1,6 @@
 import process from 'process';
 import { winston } from './winstonLogger';
 import { writeSync } from 'fs';
-// import { BaseError } from 'sequelize';
 
 const logError = (err = {}, origin) => {
     const { message = err || 'Unexpected error', statusCode = 500, stack } = err;
@@ -26,38 +25,13 @@ const logErrorMiddleware = (err, req, res, next) => {
     next(err);
 };
 
-// const isOperationalError = error => {
-//     return error instanceof BaseError && error.isOperational;
-// };
-
 process.on('unhandledRejection', error => {
     throw new Error(error);
 });
 
 process.on('uncaughtException', (error, origin) => {
     logError(error, origin);
-
-    // if (!isOperationalError(error)) {
-    //     process.exit(1);
-    // }
 });
-
-/* case 1 - promise Promise Rejected */
-// const PTest = () => new Promise((resolve, reject) => {
-//     reject('Promise Rejected');
-// });
-//
-// const fakePromise = PTest();
-// fakePromise.then(() => {
-//     console.log('Promise Resolved');
-// });
-//
-// fakePromise.catch((err) => {
-//     console.log(err);
-// });
-
-/* case 2 - non existent function */
-// nonexistentFunc();
 
 export {
     logError,
